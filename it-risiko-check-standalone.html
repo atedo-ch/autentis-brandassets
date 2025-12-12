@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-Risiko-Check | Autentis</title>
+    <style>
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    background: #f5f5f5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 40px 20px;
+    }
+}
+
+.screen {
+    display: none;
+    min-height: 100vh;
+}
+
+.screen.active {
+    display: block;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+}
+
+h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+    line-height: 1.8;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: #0066cc;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #0052a3;
+}
+
+.btn-secondary {
+    background: #666;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: #4d4d4d;
+}
+
+.btn-answer {
+    flex: 1;
+    min-width: 120px;
+    padding: 16px 32px;
+    font-size: 18px;
+}
+
+.btn-yes {
+    background: #28a745;
+    color: #fff;
+}
+
+.btn-yes:hover {
+    background: #218838;
+}
+
+.btn-no {
+    background: #dc3545;
+    color: #fff;
+}
+
+.btn-no:hover {
+    background: #c82333;
+}
+
+#start-screen .container {
+    padding-top: 60px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #0066cc;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 32px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0066cc;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.question-card {
+    background: #fff;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 32px;
+    position: relative;
+}
+
+.question-text {
+    font-size: 20px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.info-toggle {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition: background 0.2s ease;
+}
+
+.info-toggle:hover {
+    background: #e0e0e0;
+}
+
+.info-text {
+    font-size: 14px;
+    color: #666;
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 4px;
+    border-left: 3px solid #0066cc;
+    display: none;
+}
+
+.info-text.visible {
+    display: block;
+}
+
+.answer-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+    .answer-buttons {
+        flex-direction: column;
+    }
+    .btn-answer {
+        width: 100%;
+    }
+}
+
+.ampel-indicator {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.ampel-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.ampel-circle.ampel-green {
+    background: #28a745;
+}
+
+.ampel-circle.ampel-yellow {
+    background: #ffc107;
+}
+
+.ampel-circle.ampel-red {
+    background: #dc3545;
+}
+
+.ampel-label {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.result-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.result-description {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.result-recommendation {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+    padding: 20px;
+    background: #fff;
+    border-left: 4px solid #0066cc;
+    border-radius: 6px;
+}
+
+.lead-context {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+    line-height: 1.8;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.success-message {
+    font-size: 18px;
+    color: #28a745;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.success-status {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+    line-height: 1.8;
+}
+
+.escalation-section {
+    margin-top: 48px;
+    padding: 32px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.escalation-section h3 {
+    margin-bottom: 12px;
+}
+
+.escalation-section > p {
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.escalation-options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+@media (min-width: 768px) {
+    .escalation-options {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.escalation-option {
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.escalation-option h4 {
+    margin-bottom: 12px;
+}
+
+.escalation-option p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.escalation-option input[type="file"] {
+    display: none;
+}
+
+.escalation-option label.btn {
+    width: 100%;
+}
+
+.upload-hint {
+    font-size: 12px;
+    color: #666;
+    margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 28px; }
+    h2 { font-size: 22px; }
+    .question-card { padding: 24px 20px; }
+    .question-text { font-size: 18px; }
+    .ampel-circle { width: 100px; height: 100px; }
+    .ampel-label { font-size: 28px; }
+}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="container">
+                <h1>IT-Risiko-Check</h1>
+                <p class="subtitle">Diagnose-Tool für IT-Sicherheit bei Umbauten im laufenden Betrieb</p>
+                <p class="description">
+                    Dieser Check ermöglicht eine strukturierte Bewertung von Risiken für aktive ICT-Systeme während Baumassnahmen.
+                    Die Beantwortung dauert ca. 5 Minuten.
+                </p>
+                <button id="start-button" class="btn btn-primary">Check starten</button>
+            </div>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="question-screen" class="screen">
+            <div class="container">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <p class="progress-text" id="progress-text">Frage 1 von 18</p>
+
+                <h2 class="section-title" id="section-title"></h2>
+                <div class="question-card">
+                    <p class="question-text" id="question-text"></p>
+                    <button class="info-toggle" id="info-toggle">ⓘ Info</button>
+                    <p class="info-text" id="info-text"></p>
+                </div>
+
+                <div class="answer-buttons">
+                    <button class="btn btn-answer btn-yes" id="answer-yes">Ja</button>
+                    <button class="btn btn-answer btn-no" id="answer-no">Nein</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <div class="container">
+                <div class="ampel-indicator" id="ampel-indicator">
+                    <div class="ampel-circle" id="ampel-circle"></div>
+                    <h2 class="ampel-label" id="ampel-label"></h2>
+                </div>
+
+                <h3 class="result-title" id="result-title"></h3>
+                <p class="result-description" id="result-description"></p>
+                <p class="result-recommendation" id="result-recommendation"></p>
+
+                <button id="proceed-to-lead" class="btn btn-primary">Ergebnis sichern & Ersteinschätzung erhalten</button>
+            </div>
+        </div>
+
+        <!-- Lead Form Screen -->
+        <div id="lead-screen" class="screen">
+            <div class="container">
+                <h2 id="lead-title">Ergebnis sichern</h2>
+                <p id="lead-context" class="lead-context"></p>
+
+                <form id="lead-form">
+                    <div class="form-group">
+                        <label for="firstname">Vorname *</label>
+                        <input type="text" id="firstname" name="firstname" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname">Nachname *</label>
+                        <input type="text" id="lastname" name="lastname" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-Mail *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Kurz beschreiben, wo aktuell gebaut wird (optional)</label>
+                        <textarea id="description" name="description" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Absenden</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div id="success-screen" class="screen">
+            <div class="container">
+                <h2>Vielen Dank</h2>
+                <p class="success-message">Ihr Ergebnis wurde erfolgreich übermittelt.</p>
+                <p id="success-status" class="success-status"></p>
+
+                <div class="escalation-section">
+                    <h3>Zusätzliche Dokumentation</h3>
+                    <p>Optional können Sie uns weitere Informationen zukommen lassen:</p>
+
+                    <div class="escalation-options">
+                        <div class="escalation-option">
+                            <h4>Foto hochladen</h4>
+                            <input type="file" id="photo-upload" accept="image/*" capture="environment">
+                            <label for="photo-upload" class="btn btn-secondary">Foto auswählen</label>
+                            <p class="upload-hint" id="upload-status"></p>
+                        </div>
+
+                        <div class="escalation-option">
+                            <h4>Per E-Mail senden</h4>
+                            <p>Sie können uns auch direkt per E-Mail kontaktieren:</p>
+                            <a href="mailto:it-risiko@autentis.ch?subject=IT-Risiko-Check Ergebnis" class="btn btn-secondary">E-Mail senden</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+// Questions Data (inline)
+const QUESTIONS_DATA = {
+  "sections": [
+    {
+      "id": 1,
+      "title": "Thermik & Lüftung",
+      "questions": [
+        {
+          "id": 1,
+          "text": "Ist die Klimatisierung während der Bauphase durchgehend sichergestellt?",
+          "info": "Serverräume und IT-Infrastruktur benötigen konstante Temperatur (18-27°C) und Luftfeuchtigkeit (45-55%)."
+        },
+        {
+          "id": 2,
+          "text": "Sind Lüftungsöffnungen gegen Staubeintritt geschützt?",
+          "info": "Baustaub kann Lüftungssysteme verstopfen und in IT-Räume eindringen."
+        },
+        {
+          "id": 3,
+          "text": "Ist die Wärmeabfuhr der aktiven IT-Komponenten gewährleistet?",
+          "info": "Unterbrechungen der Kühlluft-Zirkulation können zu Überhitzung und Ausfällen führen."
+        },
+        {
+          "id": 4,
+          "text": "Sind Temperaturschwankungen im Serverraum ausgeschlossen?",
+          "info": "Temperaturschwankungen > 5°C/h können Hardware beschädigen und Kondensation verursachen."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Physische Barrieren & Staubarten",
+      "questions": [
+        {
+          "id": 5,
+          "text": "Sind Staubschutzwände zwischen Baustelle und IT-Bereichen installiert?",
+          "info": "Professionelle Staubschutzwände mit Unterdrucksystem verhindern Migration von Feinstaub."
+        },
+        {
+          "id": 6,
+          "text": "Ist bekannt, ob Feinstaub (< 10 µm) durch die Arbeiten entsteht?",
+          "info": "Feinstaub aus Beton, Gips oder Mineralwolle dringt in elektronische Komponenten ein und verursacht Kurzschlüsse."
+        },
+        {
+          "id": 7,
+          "text": "Sind Schleusen/Übergänge zu IT-Räumen staubdicht ausgeführt?",
+          "info": "Türspalten und Durchführungen müssen abgedichtet sein, um Staubmigration zu verhindern."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Etagenverteiler & dezentrale Technik",
+      "questions": [
+        {
+          "id": 8,
+          "text": "Sind alle Etagenverteiler erfasst und auf der Baustelle markiert?",
+          "info": "Unbekannte oder nicht markierte Verteiler können bei Bauarbeiten beschädigt werden."
+        },
+        {
+          "id": 9,
+          "text": "Ist der Zugang zu dezentralen IT-Komponenten jederzeit möglich?",
+          "info": "Bei Störungen muss Zugang für Wartung und Notfalleingriffe sichergestellt sein."
+        },
+        {
+          "id": 10,
+          "text": "Sind Netzwerkschränke gegen physische Erschütterungen gesichert?",
+          "info": "Erschütterungen durch Bohrarbeiten, Abbruch oder schwere Maschinen können Verbindungen lösen."
+        },
+        {
+          "id": 11,
+          "text": "Ist die Stromversorgung aller dezentralen Komponenten redundant?",
+          "info": "Bei Stromausfall durch Bauarbeiten verhindert Redundanz (USV/zweite Einspeisung) Totalausfälle."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "ESD & Reinigung",
+      "questions": [
+        {
+          "id": 12,
+          "text": "Ist das Reinigungspersonal für ESD-Risiken geschult?",
+          "info": "Elektrostatische Entladung kann Elektronik zerstören. Schulung verhindert Fehlhandlungen."
+        },
+        {
+          "id": 13,
+          "text": "Werden ausschliesslich ESD-geeignete Reinigungsmethoden eingesetzt?",
+          "info": "Herkömmliche Reinigungstücher und -mittel erzeugen statische Aufladung."
+        },
+        {
+          "id": 14,
+          "text": "Ist die Verwendung von Staubsaugern ohne ESD-Schutz ausgeschlossen?",
+          "info": "Standard-Staubsauger erzeugen hohe elektrostatische Ladungen (bis 30 kV) durch Luftbewegung."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Notfall & Dokumentation",
+      "questions": [
+        {
+          "id": 15,
+          "text": "Existiert ein Notfallplan für IT-Ausfälle während der Bauphase?",
+          "info": "Notfallpläne definieren Reaktionszeiten, Verantwortlichkeiten und Eskalationswege."
+        },
+        {
+          "id": 16,
+          "text": "Sind Verantwortlichkeiten für IT-Notfälle klar definiert und kommuniziert?",
+          "info": "Im Notfall muss sofort klar sein, wer entscheidet und handelt (Bauleitung, IT, Facility)."
+        },
+        {
+          "id": 17,
+          "text": "Ist eine Rückfallebene dokumentiert (z.B. mobiler Arbeitsplatz)?",
+          "info": "Bei längerem Ausfall ermöglichen Ausweicharbeitsplätze die Fortführung kritischer Geschäftsprozesse."
+        },
+        {
+          "id": 18,
+          "text": "Sind kritische IT-Systeme und deren Standorte dokumentiert?",
+          "info": "Dokumentation verhindert, dass bei Bauarbeiten versehentlich kritische Systeme beschädigt werden."
+        }
+      ]
+    }
+  ],
+  "scoring": {
+    "green": {
+      "min": 0,
+      "max": 2,
+      "label": "GRÜN",
+      "title": "Risiko: Gering",
+      "description": "Die getroffenen Schutzmassnahmen decken die wesentlichen Risiken ab. Das Projekt weist ein geringes Gefährdungspotenzial für aktive IT-Systeme auf.",
+      "recommendation": "Stellen Sie sicher, dass die bestehenden Massnahmen während der gesamten Bauphase eingehalten werden. Eine laufende Kontrolle wird empfohlen."
+    },
+    "yellow": {
+      "min": 3,
+      "max": 5,
+      "label": "GELB",
+      "title": "Risiko: Erhöht",
+      "description": "Es bestehen mehrere Lücken in den Schutzmassnahmen. Das Risiko für Betriebsunterbrechungen oder Schäden an IT-Systemen ist signifikant erhöht.",
+      "recommendation": "Schliessen Sie die identifizierten Lücken vor Baubeginn oder während laufender Arbeiten. Eine fachliche Ersteinschätzung durch Spezialisten wird empfohlen."
+    },
+    "red": {
+      "min": 6,
+      "max": 999,
+      "label": "ROT",
+      "title": "Risiko: Hoch",
+      "description": "Die aktuelle Schutzsituation weist erhebliche Defizite auf. Das Risiko für gravierende Betriebsausfälle, Datenverlust oder Hardware-Schäden ist hoch.",
+      "recommendation": "Stoppen Sie nicht-dringende Bauarbeiten in IT-relevanten Bereichen bis zur Klärung der Risiken. Eine sofortige Fachberatung ist zwingend erforderlich."
+    }
+  }
+};
+
+// Application State
+const state = {
+    questionsData: QUESTIONS_DATA,
+    currentQuestionIndex: 0,
+    answers: [],
+    totalRiskPoints: 0,
+    ampelStatus: null,
+    leadData: null
+};
+
+// Setup Event Listeners
+function setupEventListeners() {
+    document.getElementById('start-button').addEventListener('click', startCheck);
+    document.getElementById('answer-yes').addEventListener('click', () => handleAnswer(true));
+    document.getElementById('answer-no').addEventListener('click', () => handleAnswer(false));
+    document.getElementById('info-toggle').addEventListener('click', toggleInfo);
+    document.getElementById('proceed-to-lead').addEventListener('click', showLeadForm);
+    document.getElementById('lead-form').addEventListener('submit', handleLeadSubmit);
+    document.getElementById('photo-upload').addEventListener('change', handlePhotoUpload);
+}
+
+// Start Check
+function startCheck() {
+    state.currentQuestionIndex = 0;
+    state.answers = [];
+    state.totalRiskPoints = 0;
+    showScreen('question-screen');
+    displayQuestion();
+}
+
+// Display Current Question
+function displayQuestion() {
+    const allQuestions = getAllQuestions();
+    const totalQuestions = allQuestions.length;
+    const currentQuestion = allQuestions[state.currentQuestionIndex];
+    const section = getSectionForQuestion(state.currentQuestionIndex);
+
+    const progressPercent = ((state.currentQuestionIndex + 1) / totalQuestions) * 100;
+    document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+    document.getElementById('progress-text').textContent = `Frage ${state.currentQuestionIndex + 1} von ${totalQuestions}`;
+
+    document.getElementById('section-title').textContent = section.title;
+    document.getElementById('question-text').textContent = currentQuestion.text;
+    document.getElementById('info-text').textContent = currentQuestion.info;
+    document.getElementById('info-text').classList.remove('visible');
+}
+
+// Get all questions as flat array
+function getAllQuestions() {
+    const questions = [];
+    state.questionsData.sections.forEach(section => {
+        section.questions.forEach(question => {
+            questions.push(question);
+        });
+    });
+    return questions;
+}
+
+// Get section for current question
+function getSectionForQuestion(questionIndex) {
+    let currentIndex = 0;
+    for (const section of state.questionsData.sections) {
+        if (questionIndex < currentIndex + section.questions.length) {
+            return section;
+        }
+        currentIndex += section.questions.length;
+    }
+    return state.questionsData.sections[0];
+}
+
+// Handle Answer
+function handleAnswer(isYes) {
+    const allQuestions = getAllQuestions();
+    const currentQuestion = allQuestions[state.currentQuestionIndex];
+
+    state.answers.push({
+        questionId: currentQuestion.id,
+        answer: isYes
+    });
+
+    // Calculate risk points: Nein = 1 point, Ja = 0 points
+    if (!isYes) {
+        state.totalRiskPoints++;
+    }
+
+    state.currentQuestionIndex++;
+
+    if (state.currentQuestionIndex < allQuestions.length) {
+        displayQuestion();
+    } else {
+        calculateResult();
+        showResultScreen();
+    }
+}
+
+// Toggle Info Text
+function toggleInfo() {
+    const infoText = document.getElementById('info-text');
+    infoText.classList.toggle('visible');
+}
+
+// Calculate Result based on Ampel Logic
+function calculateResult() {
+    const riskPoints = state.totalRiskPoints;
+    const scoring = state.questionsData.scoring;
+
+    if (riskPoints >= scoring.red.min && riskPoints <= scoring.red.max) {
+        state.ampelStatus = 'red';
+    } else if (riskPoints >= scoring.yellow.min && riskPoints <= scoring.yellow.max) {
+        state.ampelStatus = 'yellow';
+    } else if (riskPoints >= scoring.green.min && riskPoints <= scoring.green.max) {
+        state.ampelStatus = 'green';
+    }
+}
+
+// Show Result Screen
+function showResultScreen() {
+    const scoring = state.questionsData.scoring[state.ampelStatus];
+
+    const ampelCircle = document.getElementById('ampel-circle');
+    const ampelLabel = document.getElementById('ampel-label');
+    ampelCircle.className = `ampel-circle ampel-${state.ampelStatus}`;
+    ampelLabel.textContent = scoring.label;
+
+    document.getElementById('result-title').textContent = scoring.title;
+    document.getElementById('result-description').textContent = scoring.description;
+    document.getElementById('result-recommendation').textContent = scoring.recommendation;
+
+    showScreen('result-screen');
+}
+
+// Show Lead Form
+function showLeadForm() {
+    let contextText = '';
+    if (state.ampelStatus === 'red') {
+        contextText = 'Aufgrund des ermittelten hohen Risikos empfehlen wir dringend eine fachliche Ersteinschätzung. Geben Sie Ihre Kontaktdaten ein, um das Ergebnis zu dokumentieren und eine Einschätzung zu erhalten.';
+    } else if (state.ampelStatus === 'yellow') {
+        contextText = 'Das Ergebnis zeigt erhöhte Risiken. Eine fachliche Ersteinschätzung kann helfen, die identifizierten Lücken zu schliessen. Geben Sie Ihre Kontaktdaten ein, um das Ergebnis zu sichern.';
+    } else {
+        contextText = 'Sichern Sie Ihr Ergebnis für die Projektdokumentation. Geben Sie Ihre Kontaktdaten ein, um eine Bestätigung und Ersteinschätzung zu erhalten.';
+    }
+
+    document.getElementById('lead-context').textContent = contextText;
+    showScreen('lead-screen');
+}
+
+// Handle Lead Form Submit
+function handleLeadSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    state.leadData = {
+        firstname: formData.get('firstname'),
+        lastname: formData.get('lastname'),
+        email: formData.get('email'),
+        description: formData.get('description'),
+        ampelStatus: state.ampelStatus,
+        riskPoints: state.totalRiskPoints,
+        timestamp: new Date().toISOString()
+    };
+
+    console.log('Lead Data:', state.leadData);
+    showSuccessScreen();
+}
+
+// Show Success Screen
+function showSuccessScreen() {
+    const scoring = state.questionsData.scoring[state.ampelStatus];
+
+    let statusMessage = '';
+    if (state.ampelStatus === 'red') {
+        statusMessage = `Ihr Check ergab den Status ${scoring.label}. Ein Spezialist wird sich zeitnah bei Ihnen melden, um die nächsten Schritte zu besprechen.`;
+    } else if (state.ampelStatus === 'yellow') {
+        statusMessage = `Ihr Check ergab den Status ${scoring.label}. Sie erhalten in Kürze eine Ersteinschätzung per E-Mail.`;
+    } else {
+        statusMessage = `Ihr Check ergab den Status ${scoring.label}. Eine Bestätigung wurde an Ihre E-Mail-Adresse gesendet.`;
+    }
+
+    document.getElementById('success-status').textContent = statusMessage;
+    showScreen('success-screen');
+}
+
+// Handle Photo Upload
+function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const uploadStatus = document.getElementById('upload-status');
+        uploadStatus.textContent = `Foto ausgewählt: ${file.name}`;
+        console.log('Photo uploaded:', file.name);
+    }
+}
+
+// Show Screen
+function showScreen(screenId) {
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(screen => {
+        screen.classList.remove('active');
+    });
+    document.getElementById(screenId).classList.add('active');
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', setupEventListeners);
+    </script>
+</body>
+</html>
