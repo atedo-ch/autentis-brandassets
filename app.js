@@ -2,8 +2,7 @@
 const state = {
     questionsData: null,
     currentQuestionIndex: 0,
-    answers: [],
-    totalRiskPoints: 0,
+    answers: {}, // Store answers by question ID
     ampelStatus: null,
     leadData: null
 };
@@ -23,9 +22,11 @@ async function init() {
 // Setup Event Listeners
 function setupEventListeners() {
     document.getElementById('start-button').addEventListener('click', startCheck);
-    document.getElementById('answer-yes').addEventListener('click', () => handleAnswer(true));
-    document.getElementById('answer-no').addEventListener('click', () => handleAnswer(false));
+    document.getElementById('answer-yes').addEventListener('click', () => selectAnswer(true));
+    document.getElementById('answer-no').addEventListener('click', () => selectAnswer(false));
     document.getElementById('info-toggle').addEventListener('click', toggleInfo);
+    document.getElementById('btn-back').addEventListener('click', goToPreviousQuestion);
+    document.getElementById('btn-next').addEventListener('click', goToNextQuestion);
     document.getElementById('proceed-to-lead').addEventListener('click', showLeadForm);
     document.getElementById('lead-form').addEventListener('submit', handleLeadSubmit);
     document.getElementById('photo-upload').addEventListener('change', handlePhotoUpload);
@@ -34,10 +35,59 @@ function setupEventListeners() {
 // Start Check
 function startCheck() {
     state.currentQuestionIndex = 0;
-    state.answers = [];
-    state.totalRiskPoints = 0;
+    state.answers = {};
     showScreen('question-screen');
     displayQuestion();
+}
+
+// Select Answer
+function selectAnswer(isYes) {
+    const allQuestions = getAllQuestions();
+    const currentQuestion = allQuestions[state.currentQuestionIndex];
+
+    // Store answer
+    state.answers[currentQuestion.id] = isYes;
+
+    // Update UI
+    updateAnswerButtons();
+
+    // Enable next button
+    document.getElementById('btn-next').disabled = false;
+}
+
+// Update Answer Buttons UI
+function updateAnswerButtons() {
+    const allQuestions = getAllQuestions();
+    const currentQuestion = allQuestions[state.currentQuestionIndex];
+    const currentAnswer = state.answers[currentQuestion.id];
+
+    const yesBtn = document.getElementById('answer-yes');
+    const noBtn = document.getElementById('answer-no');
+
+    yesBtn.classList.toggle('selected', currentAnswer === true);
+    noBtn.classList.toggle('selected', currentAnswer === false);
+}
+
+// Go to Previous Question
+function goToPreviousQuestion() {
+    if (state.currentQuestionIndex > 0) {
+        state.currentQuestionIndex--;
+        displayQuestion();
+    }
+}
+
+// Go to Next Question
+function goToNextQuestion() {
+    const allQuestions = getAllQuestions();
+
+    if (state.currentQuestionIndex < allQuestions.length - 1) {
+        state.currentQuestionIndex++;
+        displayQuestion();
+    } else {
+        // Last question - calculate result and show
+        calculateResult();
+        showResultScreen();
+    }
 }
 
 // Display Current Question
@@ -57,6 +107,25 @@ function displayQuestion() {
     document.getElementById('question-text').textContent = currentQuestion.text;
     document.getElementById('info-text').textContent = currentQuestion.info;
     document.getElementById('info-text').classList.remove('visible');
+
+    // Update button states
+    updateAnswerButtons();
+
+    // Update navigation buttons
+    const backBtn = document.getElementById('btn-back');
+    const nextBtn = document.getElementById('btn-next');
+
+    backBtn.disabled = state.currentQuestionIndex === 0;
+
+    const hasAnswer = state.answers[currentQuestion.id] !== undefined;
+    nextBtn.disabled = !hasAnswer;
+
+    // Update next button text
+    if (state.currentQuestionIndex === totalQuestions - 1) {
+        nextBtn.textContent = 'Ergebnis anzeigen →';
+    } else {
+        nextBtn.textContent = 'Weiter →';
+    }
 }
 
 // Get all questions as flat array
@@ -82,33 +151,6 @@ function getSectionForQuestion(questionIndex) {
     return state.questionsData.sections[0];
 }
 
-// Handle Answer
-function handleAnswer(isYes) {
-    const allQuestions = getAllQuestions();
-    const currentQuestion = allQuestions[state.currentQuestionIndex];
-
-    // Store answer
-    state.answers.push({
-        questionId: currentQuestion.id,
-        answer: isYes
-    });
-
-    // Calculate risk points: Nein = 1 point, Ja = 0 points
-    if (!isYes) {
-        state.totalRiskPoints++;
-    }
-
-    // Move to next question or show result
-    state.currentQuestionIndex++;
-
-    if (state.currentQuestionIndex < allQuestions.length) {
-        displayQuestion();
-    } else {
-        calculateResult();
-        showResultScreen();
-    }
-}
-
 // Toggle Info Text
 function toggleInfo() {
     const infoText = document.getElementById('info-text');
@@ -117,7 +159,14 @@ function toggleInfo() {
 
 // Calculate Result based on Ampel Logic
 function calculateResult() {
-    const riskPoints = state.totalRiskPoints;
+    // Count "Nein" answers (false values)
+    let riskPoints = 0;
+    Object.values(state.answers).forEach(answer => {
+        if (answer === false) {
+            riskPoints++;
+        }
+    });
+
     const scoring = state.questionsData.scoring;
 
     if (riskPoints >= scoring.red.min && riskPoints <= scoring.red.max) {
@@ -170,13 +219,21 @@ function handleLeadSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
+
+    // Count risk points
+    let riskPoints = 0;
+    Object.values(state.answers).forEach(answer => {
+        if (answer === false) riskPoints++;
+    });
+
     state.leadData = {
         firstname: formData.get('firstname'),
         lastname: formData.get('lastname'),
         email: formData.get('email'),
         description: formData.get('description'),
         ampelStatus: state.ampelStatus,
-        riskPoints: state.totalRiskPoints,
+        riskPoints: riskPoints,
+        answers: state.answers,
         timestamp: new Date().toISOString()
     };
 

@@ -16,8 +16,8 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-size: 16px;
     line-height: 1.6;
-    color: #333;
-    background: #f5f5f5;
+    color: #474747;
+    background: #FFFFFF;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -46,39 +46,39 @@ h1 {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 12px;
-    color: #1a1a1a;
+    color: #474747;
 }
 
 h2 {
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 16px;
-    color: #1a1a1a;
+    color: #474747;
 }
 
 h3 {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 12px;
-    color: #1a1a1a;
+    color: #474747;
 }
 
 h4 {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 8px;
-    color: #1a1a1a;
+    color: #474747;
 }
 
 .subtitle {
     font-size: 18px;
-    color: #666;
+    color: #474747;
     margin-bottom: 24px;
 }
 
 .description {
     font-size: 16px;
-    color: #666;
+    color: #474747;
     margin-bottom: 32px;
     line-height: 1.8;
 }
@@ -97,21 +97,31 @@ h4 {
 }
 
 .btn-primary {
-    background: #0066cc;
-    color: #fff;
+    background: #487274;
+    color: #FFFFFF;
 }
 
 .btn-primary:hover {
-    background: #0052a3;
+    background: #3a5c5e;
+}
+
+.btn-primary:disabled {
+    background: #D1D1D1;
+    cursor: not-allowed;
 }
 
 .btn-secondary {
-    background: #666;
-    color: #fff;
+    background: #474747;
+    color: #FFFFFF;
 }
 
 .btn-secondary:hover {
-    background: #4d4d4d;
+    background: #333333;
+}
+
+.btn-secondary:disabled {
+    background: #D1D1D1;
+    cursor: not-allowed;
 }
 
 .btn-answer {
@@ -119,24 +129,20 @@ h4 {
     min-width: 120px;
     padding: 16px 32px;
     font-size: 18px;
+    border: 2px solid #D1D1D1;
+    background: #FFFFFF;
+    color: #474747;
 }
 
-.btn-yes {
-    background: #28a745;
-    color: #fff;
+.btn-answer:hover {
+    border-color: #487274;
+    background: #FFFFFF;
 }
 
-.btn-yes:hover {
-    background: #218838;
-}
-
-.btn-no {
-    background: #dc3545;
-    color: #fff;
-}
-
-.btn-no:hover {
-    background: #c82333;
+.btn-answer.selected {
+    background: #487274;
+    color: #FFFFFF;
+    border-color: #487274;
 }
 
 #start-screen .container {
@@ -146,7 +152,7 @@ h4 {
 .progress-bar {
     width: 100%;
     height: 8px;
-    background: #e0e0e0;
+    background: #D1D1D1;
     border-radius: 4px;
     margin-bottom: 8px;
     overflow: hidden;
@@ -154,44 +160,45 @@ h4 {
 
 .progress-fill {
     height: 100%;
-    background: #0066cc;
+    background: #487274;
     transition: width 0.3s ease;
 }
 
 .progress-text {
     font-size: 14px;
-    color: #666;
+    color: #474747;
     margin-bottom: 32px;
 }
 
 .section-title {
     font-size: 18px;
     font-weight: 600;
-    color: #0066cc;
+    color: #487274;
     margin-bottom: 16px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .question-card {
-    background: #fff;
+    background: #FFFFFF;
     padding: 32px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-bottom: 32px;
     position: relative;
+    border: 1px solid #D1D1D1;
 }
 
 .question-text {
     font-size: 20px;
     font-weight: 500;
-    color: #1a1a1a;
+    color: #474747;
     margin-bottom: 16px;
     line-height: 1.6;
 }
 
 .info-toggle {
-    background: #f0f0f0;
+    background: #D1D1D1;
     border: none;
     border-radius: 50%;
     width: 32px;
@@ -203,20 +210,25 @@ h4 {
     justify-content: center;
     margin-bottom: 8px;
     transition: background 0.2s ease;
+    color: #474747;
 }
 
 .info-toggle:hover {
-    background: #e0e0e0;
+    background: #487274;
+    color: #FFFFFF;
 }
 
 .info-text {
     font-size: 14px;
-    color: #666;
-    background: #f9f9f9;
+    color: #474747;
+    background: #FFFFFF;
     padding: 12px;
     border-radius: 4px;
-    border-left: 3px solid #0066cc;
+    border-left: 3px solid #487274;
+    border: 1px solid #D1D1D1;
+    border-left: 3px solid #487274;
     display: none;
+    margin-top: 12px;
 }
 
 .info-text.visible {
@@ -227,6 +239,22 @@ h4 {
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left {
+    flex: 0 0 auto;
+}
+
+.nav-right {
+    flex: 0 0 auto;
 }
 
 @media (max-width: 480px) {
@@ -270,12 +298,14 @@ h4 {
     font-size: 32px;
     font-weight: 700;
     margin: 0;
+    color: #474747;
 }
 
 .result-title {
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 16px;
+    color: #474747;
 }
 
 .result-description {
@@ -283,8 +313,9 @@ h4 {
     line-height: 1.8;
     margin-bottom: 24px;
     padding: 20px;
-    background: #f9f9f9;
+    background: #FFFFFF;
     border-radius: 6px;
+    border: 1px solid #D1D1D1;
 }
 
 .result-recommendation {
@@ -292,14 +323,16 @@ h4 {
     line-height: 1.8;
     margin-bottom: 32px;
     padding: 20px;
-    background: #fff;
-    border-left: 4px solid #0066cc;
+    background: #FFFFFF;
+    border-left: 4px solid #487274;
     border-radius: 6px;
+    border: 1px solid #D1D1D1;
+    border-left: 4px solid #487274;
 }
 
 .lead-context {
     font-size: 16px;
-    color: #666;
+    color: #474747;
     margin-bottom: 32px;
     line-height: 1.8;
 }
@@ -312,7 +345,7 @@ h4 {
     display: block;
     font-weight: 600;
     margin-bottom: 8px;
-    color: #333;
+    color: #474747;
 }
 
 .form-group input,
@@ -320,7 +353,7 @@ h4 {
     width: 100%;
     padding: 12px;
     font-size: 16px;
-    border: 1px solid #ddd;
+    border: 1px solid #D1D1D1;
     border-radius: 4px;
     font-family: inherit;
 }
@@ -328,7 +361,7 @@ h4 {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #0066cc;
+    border-color: #487274;
 }
 
 .form-group textarea {
@@ -344,7 +377,7 @@ h4 {
 
 .success-status {
     font-size: 16px;
-    color: #666;
+    color: #474747;
     margin-bottom: 32px;
     line-height: 1.8;
 }
@@ -352,9 +385,10 @@ h4 {
 .escalation-section {
     margin-top: 48px;
     padding: 32px;
-    background: #fff;
+    background: #FFFFFF;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #D1D1D1;
 }
 
 .escalation-section h3 {
@@ -362,7 +396,7 @@ h4 {
 }
 
 .escalation-section > p {
-    color: #666;
+    color: #474747;
     margin-bottom: 24px;
 }
 
@@ -380,8 +414,9 @@ h4 {
 
 .escalation-option {
     padding: 20px;
-    background: #f9f9f9;
+    background: #FFFFFF;
     border-radius: 6px;
+    border: 1px solid #D1D1D1;
 }
 
 .escalation-option h4 {
@@ -390,7 +425,7 @@ h4 {
 
 .escalation-option p {
     font-size: 14px;
-    color: #666;
+    color: #474747;
     margin-bottom: 16px;
 }
 
@@ -404,7 +439,7 @@ h4 {
 
 .upload-hint {
     font-size: 12px;
-    color: #666;
+    color: #474747;
     margin-top: 8px;
 }
 
@@ -449,8 +484,17 @@ h4 {
                 </div>
 
                 <div class="answer-buttons">
-                    <button class="btn btn-answer btn-yes" id="answer-yes">Ja</button>
-                    <button class="btn btn-answer btn-no" id="answer-no">Nein</button>
+                    <button class="btn btn-answer" id="answer-yes" data-answer="yes">Ja</button>
+                    <button class="btn btn-answer" id="answer-no" data-answer="no">Nein</button>
+                </div>
+
+                <div class="navigation-buttons">
+                    <div class="nav-left">
+                        <button class="btn btn-secondary" id="btn-back">← Zurück</button>
+                    </div>
+                    <div class="nav-right">
+                        <button class="btn btn-primary" id="btn-next" disabled>Weiter →</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -690,8 +734,7 @@ const QUESTIONS_DATA = {
 const state = {
     questionsData: QUESTIONS_DATA,
     currentQuestionIndex: 0,
-    answers: [],
-    totalRiskPoints: 0,
+    answers: {}, // Store answers by question ID
     ampelStatus: null,
     leadData: null
 };
@@ -699,9 +742,11 @@ const state = {
 // Setup Event Listeners
 function setupEventListeners() {
     document.getElementById('start-button').addEventListener('click', startCheck);
-    document.getElementById('answer-yes').addEventListener('click', () => handleAnswer(true));
-    document.getElementById('answer-no').addEventListener('click', () => handleAnswer(false));
+    document.getElementById('answer-yes').addEventListener('click', () => selectAnswer(true));
+    document.getElementById('answer-no').addEventListener('click', () => selectAnswer(false));
     document.getElementById('info-toggle').addEventListener('click', toggleInfo);
+    document.getElementById('btn-back').addEventListener('click', goToPreviousQuestion);
+    document.getElementById('btn-next').addEventListener('click', goToNextQuestion);
     document.getElementById('proceed-to-lead').addEventListener('click', showLeadForm);
     document.getElementById('lead-form').addEventListener('submit', handleLeadSubmit);
     document.getElementById('photo-upload').addEventListener('change', handlePhotoUpload);
@@ -710,10 +755,59 @@ function setupEventListeners() {
 // Start Check
 function startCheck() {
     state.currentQuestionIndex = 0;
-    state.answers = [];
-    state.totalRiskPoints = 0;
+    state.answers = {};
     showScreen('question-screen');
     displayQuestion();
+}
+
+// Select Answer
+function selectAnswer(isYes) {
+    const allQuestions = getAllQuestions();
+    const currentQuestion = allQuestions[state.currentQuestionIndex];
+
+    // Store answer
+    state.answers[currentQuestion.id] = isYes;
+
+    // Update UI
+    updateAnswerButtons();
+
+    // Enable next button
+    document.getElementById('btn-next').disabled = false;
+}
+
+// Update Answer Buttons UI
+function updateAnswerButtons() {
+    const allQuestions = getAllQuestions();
+    const currentQuestion = allQuestions[state.currentQuestionIndex];
+    const currentAnswer = state.answers[currentQuestion.id];
+
+    const yesBtn = document.getElementById('answer-yes');
+    const noBtn = document.getElementById('answer-no');
+
+    yesBtn.classList.toggle('selected', currentAnswer === true);
+    noBtn.classList.toggle('selected', currentAnswer === false);
+}
+
+// Go to Previous Question
+function goToPreviousQuestion() {
+    if (state.currentQuestionIndex > 0) {
+        state.currentQuestionIndex--;
+        displayQuestion();
+    }
+}
+
+// Go to Next Question
+function goToNextQuestion() {
+    const allQuestions = getAllQuestions();
+
+    if (state.currentQuestionIndex < allQuestions.length - 1) {
+        state.currentQuestionIndex++;
+        displayQuestion();
+    } else {
+        // Last question - calculate result and show
+        calculateResult();
+        showResultScreen();
+    }
 }
 
 // Display Current Question
@@ -723,14 +817,35 @@ function displayQuestion() {
     const currentQuestion = allQuestions[state.currentQuestionIndex];
     const section = getSectionForQuestion(state.currentQuestionIndex);
 
+    // Update progress
     const progressPercent = ((state.currentQuestionIndex + 1) / totalQuestions) * 100;
     document.getElementById('progress-fill').style.width = `${progressPercent}%`;
     document.getElementById('progress-text').textContent = `Frage ${state.currentQuestionIndex + 1} von ${totalQuestions}`;
 
+    // Update question content
     document.getElementById('section-title').textContent = section.title;
     document.getElementById('question-text').textContent = currentQuestion.text;
     document.getElementById('info-text').textContent = currentQuestion.info;
     document.getElementById('info-text').classList.remove('visible');
+
+    // Update button states
+    updateAnswerButtons();
+
+    // Update navigation buttons
+    const backBtn = document.getElementById('btn-back');
+    const nextBtn = document.getElementById('btn-next');
+
+    backBtn.disabled = state.currentQuestionIndex === 0;
+
+    const hasAnswer = state.answers[currentQuestion.id] !== undefined;
+    nextBtn.disabled = !hasAnswer;
+
+    // Update next button text
+    if (state.currentQuestionIndex === totalQuestions - 1) {
+        nextBtn.textContent = 'Ergebnis anzeigen →';
+    } else {
+        nextBtn.textContent = 'Weiter →';
+    }
 }
 
 // Get all questions as flat array
@@ -756,31 +871,6 @@ function getSectionForQuestion(questionIndex) {
     return state.questionsData.sections[0];
 }
 
-// Handle Answer
-function handleAnswer(isYes) {
-    const allQuestions = getAllQuestions();
-    const currentQuestion = allQuestions[state.currentQuestionIndex];
-
-    state.answers.push({
-        questionId: currentQuestion.id,
-        answer: isYes
-    });
-
-    // Calculate risk points: Nein = 1 point, Ja = 0 points
-    if (!isYes) {
-        state.totalRiskPoints++;
-    }
-
-    state.currentQuestionIndex++;
-
-    if (state.currentQuestionIndex < allQuestions.length) {
-        displayQuestion();
-    } else {
-        calculateResult();
-        showResultScreen();
-    }
-}
-
 // Toggle Info Text
 function toggleInfo() {
     const infoText = document.getElementById('info-text');
@@ -789,7 +879,14 @@ function toggleInfo() {
 
 // Calculate Result based on Ampel Logic
 function calculateResult() {
-    const riskPoints = state.totalRiskPoints;
+    // Count "Nein" answers (false values)
+    let riskPoints = 0;
+    Object.values(state.answers).forEach(answer => {
+        if (answer === false) {
+            riskPoints++;
+        }
+    });
+
     const scoring = state.questionsData.scoring;
 
     if (riskPoints >= scoring.red.min && riskPoints <= scoring.red.max) {
@@ -837,13 +934,21 @@ function handleLeadSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
+
+    // Count risk points
+    let riskPoints = 0;
+    Object.values(state.answers).forEach(answer => {
+        if (answer === false) riskPoints++;
+    });
+
     state.leadData = {
         firstname: formData.get('firstname'),
         lastname: formData.get('lastname'),
         email: formData.get('email'),
         description: formData.get('description'),
         ampelStatus: state.ampelStatus,
-        riskPoints: state.totalRiskPoints,
+        riskPoints: riskPoints,
+        answers: state.answers,
         timestamp: new Date().toISOString()
     };
 
