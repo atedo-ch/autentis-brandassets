@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-Risiko-Check | Autentis</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="container">
+                <h1>IT-Risiko-Check</h1>
+                <p class="subtitle">Diagnose-Tool für IT-Sicherheit bei Umbauten im laufenden Betrieb</p>
+                <p class="description">
+                    Dieser Check ermöglicht eine strukturierte Bewertung von Risiken für aktive ICT-Systeme während Baumassnahmen.
+                    Die Beantwortung dauert ca. 5 Minuten.
+                </p>
+                <button id="start-button" class="btn btn-primary">Check starten</button>
+            </div>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="question-screen" class="screen">
+            <div class="container">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <p class="progress-text" id="progress-text">Frage 1 von 18</p>
+
+                <h2 class="section-title" id="section-title"></h2>
+                <div class="question-card">
+                    <p class="question-text" id="question-text"></p>
+                    <button class="info-toggle" id="info-toggle">ⓘ Info</button>
+                    <p class="info-text" id="info-text"></p>
+                </div>
+
+                <div class="answer-buttons">
+                    <button class="btn btn-answer btn-yes" id="answer-yes">Ja</button>
+                    <button class="btn btn-answer btn-no" id="answer-no">Nein</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <div class="container">
+                <div class="ampel-indicator" id="ampel-indicator">
+                    <div class="ampel-circle" id="ampel-circle"></div>
+                    <h2 class="ampel-label" id="ampel-label"></h2>
+                </div>
+
+                <h3 class="result-title" id="result-title"></h3>
+                <p class="result-description" id="result-description"></p>
+                <p class="result-recommendation" id="result-recommendation"></p>
+
+                <button id="proceed-to-lead" class="btn btn-primary">Ergebnis sichern & Ersteinschätzung erhalten</button>
+            </div>
+        </div>
+
+        <!-- Lead Form Screen -->
+        <div id="lead-screen" class="screen">
+            <div class="container">
+                <h2 id="lead-title">Ergebnis sichern</h2>
+                <p id="lead-context" class="lead-context"></p>
+
+                <form id="lead-form">
+                    <div class="form-group">
+                        <label for="firstname">Vorname *</label>
+                        <input type="text" id="firstname" name="firstname" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname">Nachname *</label>
+                        <input type="text" id="lastname" name="lastname" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-Mail *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Kurz beschreiben, wo aktuell gebaut wird (optional)</label>
+                        <textarea id="description" name="description" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Absenden</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div id="success-screen" class="screen">
+            <div class="container">
+                <h2>Vielen Dank</h2>
+                <p class="success-message">Ihr Ergebnis wurde erfolgreich übermittelt.</p>
+                <p id="success-status" class="success-status"></p>
+
+                <div class="escalation-section">
+                    <h3>Zusätzliche Dokumentation</h3>
+                    <p>Optional können Sie uns weitere Informationen zukommen lassen:</p>
+
+                    <div class="escalation-options">
+                        <div class="escalation-option">
+                            <h4>Foto hochladen</h4>
+                            <input type="file" id="photo-upload" accept="image/*" capture="environment">
+                            <label for="photo-upload" class="btn btn-secondary">Foto auswählen</label>
+                            <p class="upload-hint" id="upload-status"></p>
+                        </div>
+
+                        <div class="escalation-option">
+                            <h4>Per E-Mail senden</h4>
+                            <p>Sie können uns auch direkt per E-Mail kontaktieren:</p>
+                            <a href="mailto:it-risiko@autentis.ch?subject=IT-Risiko-Check Ergebnis" class="btn btn-secondary">E-Mail senden</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+{
+  "sections": [
+    {
+      "id": 1,
+      "title": "Thermik & Lüftung",
+      "questions": [
+        {
+          "id": 1,
+          "text": "Ist die Klimatisierung während der Bauphase durchgehend sichergestellt?",
+          "info": "Serverräume und IT-Infrastruktur benötigen konstante Temperatur (18-27°C) und Luftfeuchtigkeit (45-55%)."
+        },
+        {
+          "id": 2,
+          "text": "Sind Lüftungsöffnungen gegen Staubeintritt geschützt?",
+          "info": "Baustaub kann Lüftungssysteme verstopfen und in IT-Räume eindringen."
+        },
+        {
+          "id": 3,
+          "text": "Ist die Wärmeabfuhr der aktiven IT-Komponenten gewährleistet?",
+          "info": "Unterbrechungen der Kühlluft-Zirkulation können zu Überhitzung und Ausfällen führen."
+        },
+        {
+          "id": 4,
+          "text": "Sind Temperaturschwankungen im Serverraum ausgeschlossen?",
+          "info": "Temperaturschwankungen > 5°C/h können Hardware beschädigen und Kondensation verursachen."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Physische Barrieren & Staubarten",
+      "questions": [
+        {
+          "id": 5,
+          "text": "Sind Staubschutzwände zwischen Baustelle und IT-Bereichen installiert?",
+          "info": "Professionelle Staubschutzwände mit Unterdrucksystem verhindern Migration von Feinstaub."
+        },
+        {
+          "id": 6,
+          "text": "Ist bekannt, ob Feinstaub (< 10 µm) durch die Arbeiten entsteht?",
+          "info": "Feinstaub aus Beton, Gips oder Mineralwolle dringt in elektronische Komponenten ein und verursacht Kurzschlüsse."
+        },
+        {
+          "id": 7,
+          "text": "Sind Schleusen/Übergänge zu IT-Räumen staubdicht ausgeführt?",
+          "info": "Türspalten und Durchführungen müssen abgedichtet sein, um Staubmigration zu verhindern."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Etagenverteiler & dezentrale Technik",
+      "questions": [
+        {
+          "id": 8,
+          "text": "Sind alle Etagenverteiler erfasst und auf der Baustelle markiert?",
+          "info": "Unbekannte oder nicht markierte Verteiler können bei Bauarbeiten beschädigt werden."
+        },
+        {
+          "id": 9,
+          "text": "Ist der Zugang zu dezentralen IT-Komponenten jederzeit möglich?",
+          "info": "Bei Störungen muss Zugang für Wartung und Notfalleingriffe sichergestellt sein."
+        },
+        {
+          "id": 10,
+          "text": "Sind Netzwerkschränke gegen physische Erschütterungen gesichert?",
+          "info": "Erschütterungen durch Bohrarbeiten, Abbruch oder schwere Maschinen können Verbindungen lösen."
+        },
+        {
+          "id": 11,
+          "text": "Ist die Stromversorgung aller dezentralen Komponenten redundant?",
+          "info": "Bei Stromausfall durch Bauarbeiten verhindert Redundanz (USV/zweite Einspeisung) Totalausfälle."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "ESD & Reinigung",
+      "questions": [
+        {
+          "id": 12,
+          "text": "Ist das Reinigungspersonal für ESD-Risiken geschult?",
+          "info": "Elektrostatische Entladung kann Elektronik zerstören. Schulung verhindert Fehlhandlungen."
+        },
+        {
+          "id": 13,
+          "text": "Werden ausschliesslich ESD-geeignete Reinigungsmethoden eingesetzt?",
+          "info": "Herkömmliche Reinigungstücher und -mittel erzeugen statische Aufladung."
+        },
+        {
+          "id": 14,
+          "text": "Ist die Verwendung von Staubsaugern ohne ESD-Schutz ausgeschlossen?",
+          "info": "Standard-Staubsauger erzeugen hohe elektrostatische Ladungen (bis 30 kV) durch Luftbewegung."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Notfall & Dokumentation",
+      "questions": [
+        {
+          "id": 15,
+          "text": "Existiert ein Notfallplan für IT-Ausfälle während der Bauphase?",
+          "info": "Notfallpläne definieren Reaktionszeiten, Verantwortlichkeiten und Eskalationswege."
+        },
+        {
+          "id": 16,
+          "text": "Sind Verantwortlichkeiten für IT-Notfälle klar definiert und kommuniziert?",
+          "info": "Im Notfall muss sofort klar sein, wer entscheidet und handelt (Bauleitung, IT, Facility)."
+        },
+        {
+          "id": 17,
+          "text": "Ist eine Rückfallebene dokumentiert (z.B. mobiler Arbeitsplatz)?",
+          "info": "Bei längerem Ausfall ermöglichen Ausweicharbeitsplätze die Fortführung kritischer Geschäftsprozesse."
+        },
+        {
+          "id": 18,
+          "text": "Sind kritische IT-Systeme und deren Standorte dokumentiert?",
+          "info": "Dokumentation verhindert, dass bei Bauarbeiten versehentlich kritische Systeme beschädigt werden."
+        }
+      ]
+    }
+  ],
+  "scoring": {
+    "green": {
+      "min": 0,
+      "max": 2,
+      "label": "GRÜN",
+      "title": "Risiko: Gering",
+      "description": "Die getroffenen Schutzmassnahmen decken die wesentlichen Risiken ab. Das Projekt weist ein geringes Gefährdungspotenzial für aktive IT-Systeme auf.",
+      "recommendation": "Stellen Sie sicher, dass die bestehenden Massnahmen während der gesamten Bauphase eingehalten werden. Eine laufende Kontrolle wird empfohlen."
+    },
+    "yellow": {
+      "min": 3,
+      "max": 5,
+      "label": "GELB",
+      "title": "Risiko: Erhöht",
+      "description": "Es bestehen mehrere Lücken in den Schutzmassnahmen. Das Risiko für Betriebsunterbrechungen oder Schäden an IT-Systemen ist signifikant erhöht.",
+      "recommendation": "Schliessen Sie die identifizierten Lücken vor Baubeginn oder während laufender Arbeiten. Eine fachliche Ersteinschätzung durch Spezialisten wird empfohlen."
+    },
+    "red": {
+      "min": 6,
+      "max": 999,
+      "label": "ROT",
+      "title": "Risiko: Hoch",
+      "description": "Die aktuelle Schutzsituation weist erhebliche Defizite auf. Das Risiko für gravierende Betriebsausfälle, Datenverlust oder Hardware-Schäden ist hoch.",
+      "recommendation": "Stoppen Sie nicht-dringende Bauarbeiten in IT-relevanten Bereichen bis zur Klärung der Risiken. Eine sofortige Fachberatung ist zwingend erforderlich."
+    }
+  }
+}
